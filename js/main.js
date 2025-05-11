@@ -292,4 +292,60 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.remove('scrolled');
         }
     });
+
+    // Hiệu ứng typing cho tiêu đề hero
+    function setupTypingEffect() {
+        const typingElement = document.querySelector('.typing-text');
+        const text = "Your Name"; // Thay bằng tên của bạn
+        if (typingElement) {
+            typingElement.textContent = "";
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < text.length) {
+                    typingElement.textContent += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                }
+            }, 100);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', setupTypingEffect);
+
+    // Hiệu ứng fade-in khi cuộn
+    function handleScrollAnimations() {
+        const elements = document.querySelectorAll('.fade-in');
+        const observer = new window.IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', handleScrollAnimations);
+
+    // Hiệu ứng timeline
+    function animateTimeline() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, index * 200);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        timelineItems.forEach(item => {
+            observer.observe(item);
+        });
+    }
+    document.addEventListener('DOMContentLoaded', animateTimeline);
 }); 
